@@ -1,5 +1,6 @@
 package com.example.hiltintegrationexample.di
 
+import com.example.hiltintegrationexample.BuildConfig
 import com.example.hiltintegrationexample.data.network.ApiKeyInterceptor
 import com.example.hiltintegrationexample.data.network.NewsApi
 import dagger.Module
@@ -16,7 +17,7 @@ import javax.inject.Singleton
 class ApplicationModule {
     @ApiKey
     @Provides
-    fun providesApiKey(): String = "7c0667db94334126b3310d3750c3007e"
+    fun providesApiKey(): String = BuildConfig.API_KEY
 
     @BaseUrl
     @Provides

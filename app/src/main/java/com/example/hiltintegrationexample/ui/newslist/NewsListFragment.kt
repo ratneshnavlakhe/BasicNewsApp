@@ -41,6 +41,11 @@ class NewsListFragment : Fragment() {
         observerNewsList()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchNews()
+    }
+
     private fun initAdapter() {
         adapter = NewsListAdapter()
         binding.rvNewsList.adapter = adapter
@@ -50,14 +55,18 @@ class NewsListFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.newsItem.collect { state ->
-                    when(state) {
+                    when (state) {
                         is State.Loading -> showLoading(true)
                         is State.Success -> {
-                            showLoading(false)
+                            showLoading(state.data.isEmpty())
+                            if (state.data.isEmpty()) {
+                                showEmptyState(true)
+                                return@collect
+                            }
+                            showEmptyState(false)
                             adapter.submitList(state.data)
                         }
                         is State.Error -> {
-                            // show error
                             showLoading(false)
                         }
                     }
@@ -66,8 +75,15 @@ class NewsListFragment : Fragment() {
         }
     }
 
+    private fun showEmptyState(isEmpty: Boolean) {
+        binding.emptyState.root.isVisible = isEmpty
+        binding.rvNewsList.isVisible = isEmpty.not()
+        binding.progressBar.isVisible = isEmpty.not()
+    }
+
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.isVisible = isLoading
         binding.rvNewsList.isVisible = isLoading.not()
+        binding.emptyState.root.isVisible = isLoading.not()
     }
 }

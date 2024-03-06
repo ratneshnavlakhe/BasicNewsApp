@@ -22,10 +22,6 @@ class NewsListViewModel
             MutableStateFlow(State.loading())
         val newsItem: StateFlow<State<List<Article>>> = _newsItem
 
-        init {
-            fetchNews()
-        }
-
         fun fetchNews() {
             viewModelScope.launch {
                 newsRepo.getNews()
