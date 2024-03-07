@@ -5,4 +5,6 @@
     <string name="settings_fragment">Settings fragment</string>
     <string name="news_locale">News Locale</string>
     <string name="emptyStateTitle">No data available</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

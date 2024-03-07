@@ -9,32 +9,43 @@ import com.bumptech.glide.Glide
 import com.example.hiltintegrationexample.databinding.NewsItemBinding
 import com.example.hiltintegrationexample.domain.model.Article
 
-class NewsListAdapter: RecyclerView.Adapter<NewsListAdapter.NewsListViewHolder>() {
-    inner class NewsListViewHolder(private val binding: NewsItemBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(
-            item: Article
-        ) {
+class NewsListAdapter(
+    val onItemClick: (item: Article) -> Unit,
+) : RecyclerView.Adapter<NewsListAdapter.NewsListViewHolder>() {
+    inner class NewsListViewHolder(private val binding: NewsItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Article) {
             with(binding) {
                 title.text = item.title
                 Glide.with(this.root).load(item.urlToImage).into(imageView)
                 description.text = item.description
+                this.root.setOnClickListener { onItemClick(item) }
             }
         }
     }
 
-    private val diffCallback = object : DiffUtil.ItemCallback<Article>() {
-        override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
-            return oldItem.url == newItem.url
-        }
+    private val diffCallback =
+        object : DiffUtil.ItemCallback<Article>() {
+            override fun areItemsTheSame(
+                oldItem: Article,
+                newItem: Article,
+            ): Boolean {
+                return oldItem.url == newItem.url
+            }
 
-        override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
+            override fun areContentsTheSame(
+                oldItem: Article,
+                newItem: Article,
+            ): Boolean {
+                return oldItem.hashCode() == newItem.hashCode()
+            }
         }
-    }
 
     private val differ = AsyncListDiffer(this, diffCallback)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsListViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): NewsListViewHolder {
         return NewsListViewHolder(
             NewsItemBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -50,8 +61,11 @@ class NewsListAdapter: RecyclerView.Adapter<NewsListAdapter.NewsListViewHolder>(
         return differ.currentList.size
     }
 
-    override fun onBindViewHolder(holder: NewsListViewHolder, position: Int) {
-        val item = differ.currentList.get(position)
+    override fun onBindViewHolder(
+        holder: NewsListViewHolder,
+        position: Int,
+    ) {
+        val item = differ.currentList[position]
         holder.bind(item)
     }
 }

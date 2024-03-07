@@ -9,10 +9,19 @@
         android:id="@+id/newsListFragment"
         android:name="com.example.hiltintegrationexample.ui.newslist.NewsListFragment"
         android:label="fragment_news_list"
-        tools:layout="@layout/fragment_news_list" />
+        tools:layout="@layout/fragment_news_list" >
+        <action
+            android:id="@+id/action_newsListFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.hiltintegrationexample.ui.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.example.hiltintegrationexample.ui.WebViewFragment"
+        android:label="fragment_web_view"
+        tools:layout="@layout/fragment_web_view" />
 </navigation>

@@ -10,9 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.example.hiltintegrationexample.R
 import com.example.hiltintegrationexample.data.model.State
 import com.example.hiltintegrationexample.databinding.FragmentNewsListBinding
+import com.example.hiltintegrationexample.domain.model.Article
 import com.example.hiltintegrationexample.ui.newslist.adapter.NewsListAdapter
+import com.example.hiltintegrationexample.ui.newslist.navigation.NewsListNavigation
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -28,7 +32,7 @@ class NewsListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         _binding = FragmentNewsListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -38,7 +42,20 @@ class NewsListFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         initAdapter()
-        observerNewsList()
+        observeNewsList()
+        setUpObservers()
+    }
+
+    private fun setUpObservers() {
+        viewModel.navigation.observe(viewLifecycleOwner) {
+            when (it) {
+                is NewsListNavigation.NavigateToWebView -> openWebView(it.item)
+            }
+        }
+    }
+
+    private fun openWebView(item: Article) {
+        findNavController().navigate(R.id.action_newsListFragment_to_webViewFragment)
     }
 
     override fun onResume() {
@@ -47,11 +64,14 @@ class NewsListFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        adapter = NewsListAdapter()
+        adapter =
+            NewsListAdapter {
+                viewModel.onNewsItemClick(it)
+            }
         binding.rvNewsList.adapter = adapter
     }
 
-    private fun observerNewsList() {
+    private fun observeNewsList() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.newsItem.collect { state ->
