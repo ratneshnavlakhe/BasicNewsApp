@@ -4,4 +4,6 @@ import com.example.hiltintegrationexample.domain.model.Article
 
 sealed class NewsListNavigation {
     data class NavigateToWebView(val item: Article) : NewsListNavigation()
+
+    object Nothing : NewsListNavigation()
 }

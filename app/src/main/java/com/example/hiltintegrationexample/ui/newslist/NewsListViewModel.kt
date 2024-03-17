@@ -1,11 +1,11 @@
 package com.example.hiltintegrationexample.ui.newslist
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hiltintegrationexample.data.model.State
 import com.example.hiltintegrationexample.domain.NewsRepo
 import com.example.hiltintegrationexample.domain.model.Article
+import com.example.hiltintegrationexample.ui.common.SingleLiveEvent
 import com.example.hiltintegrationexample.ui.newslist.navigation.NewsListNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +24,7 @@ class NewsListViewModel
             MutableStateFlow(State.loading())
         val newsItem: StateFlow<State<List<Article>>> = _newsItem
 
-        var navigation = MutableLiveData<NewsListNavigation>()
+        var navigation = SingleLiveEvent<NewsListNavigation>()
             private set
 
         fun fetchNews() {

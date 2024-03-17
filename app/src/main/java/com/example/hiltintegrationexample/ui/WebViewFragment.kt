@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.example.hiltintegrationexample.databinding.FragmentWebViewBinding
 
 class WebViewFragment : Fragment() {
     private var _binding: FragmentWebViewBinding? = null
     private val binding get() = checkNotNull(_binding)
+
+    val args: WebViewFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +32,7 @@ class WebViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         with(binding.webViewContainer) {
             settings.javaScriptEnabled = true
-            loadUrl("https://twitter.com/")
+            args.url?.let { loadUrl(it) }
         }
     }
 }

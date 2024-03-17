@@ -11,7 +11,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.hiltintegrationexample.R
 import com.example.hiltintegrationexample.data.model.State
 import com.example.hiltintegrationexample.databinding.FragmentNewsListBinding
 import com.example.hiltintegrationexample.domain.model.Article
@@ -47,15 +46,21 @@ class NewsListFragment : Fragment() {
     }
 
     private fun setUpObservers() {
-        viewModel.navigation.observe(viewLifecycleOwner) {
-            when (it) {
-                is NewsListNavigation.NavigateToWebView -> openWebView(it.item)
+        lifecycleScope.launch {
+            viewModel.navigation.observe(viewLifecycleOwner) { state ->
+                when (state) {
+                    is NewsListNavigation.NavigateToWebView -> openWebView(state.item)
+                    else -> {
+                        // do nothing
+                    }
+                }
             }
         }
     }
 
     private fun openWebView(item: Article) {
-        findNavController().navigate(R.id.action_newsListFragment_to_webViewFragment)
+        val action = NewsListFragmentDirections.actionNewsListFragmentToWebViewFragment(item.url)
+        findNavController().navigate(action)
     }
 
     override fun onResume() {
