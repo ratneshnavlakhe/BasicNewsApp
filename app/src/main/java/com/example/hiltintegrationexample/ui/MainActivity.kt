@@ -33,8 +33,8 @@ class MainActivity : AppCompatActivity() {
             AppBarConfiguration(
                 setOf(
                     R.id.newsListFragment,
-                    R.id.settingsFragment,
-                ),
+                    R.id.settingsFragment
+                )
             )
         setupActionBarWithNavController(navController, appBarConfiguration)
     }

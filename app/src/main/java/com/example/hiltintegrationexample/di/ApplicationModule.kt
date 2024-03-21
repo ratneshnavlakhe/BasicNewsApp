@@ -7,10 +7,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -32,7 +32,7 @@ class ApplicationModule {
     fun providesNetworkService(
         @BaseUrl baseUrl: String,
         gsonConverterFactory: GsonConverterFactory,
-        apiKeyInterceptor: ApiKeyInterceptor,
+        apiKeyInterceptor: ApiKeyInterceptor
     ): NewsApi {
         val okHttpClient = OkHttpClient.Builder().addInterceptor(apiKeyInterceptor).build()
         return Retrofit.Builder().client(okHttpClient).baseUrl(baseUrl)

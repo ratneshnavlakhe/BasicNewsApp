@@ -6,28 +6,28 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hiltintegrationexample.domain.NewsRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SettingsViewModel
-    @Inject
-    constructor(
-        private val newsRepo: NewsRepo,
-    ) : ViewModel() {
-        private val _newsLocale = MutableLiveData<String>()
+@Inject
+constructor(
+    private val newsRepo: NewsRepo
+) : ViewModel() {
+    private val _newsLocale = MutableLiveData<String>()
 
-        val newsLocale: LiveData<String> = _newsLocale
+    val newsLocale: LiveData<String> = _newsLocale
 
-        fun updateNewsLocale(locale: String) {
-            viewModelScope.launch {
-                newsRepo.saveCountryLocale(locale)
-            }
-        }
-
-        fun getNewsLocale() {
-            viewModelScope.launch {
-                _newsLocale.value = newsRepo.getCountryLocale()
-            }
+    fun updateNewsLocale(locale: String) {
+        viewModelScope.launch {
+            newsRepo.saveCountryLocale(locale)
         }
     }
+
+    fun getNewsLocale() {
+        viewModelScope.launch {
+            _newsLocale.value = newsRepo.getCountryLocale()
+        }
+    }
+}

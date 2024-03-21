@@ -1,11 +1,11 @@
 package com.example.hiltintegrationexample.data.network
 
 import com.example.hiltintegrationexample.di.ApiKey
+import javax.inject.Inject
+import javax.inject.Singleton
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
 class ApiKeyInterceptor @Inject constructor(@ApiKey private val apiKey: String) : Interceptor {

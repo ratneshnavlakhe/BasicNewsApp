@@ -6,18 +6,17 @@ import com.example.hiltintegrationexample.domain.Resource
  * State Management for UI & Data.
  */
 sealed class State<T> {
-    class Loading<T>: State<T>()
+    class Loading<T> : State<T>()
 
     data class Success<T>(val data: T) : State<T>()
 
-    data class Error<T>(val message: String): State<T>()
+    data class Error<T>(val message: String) : State<T>()
 
     fun isLoading(): Boolean = this is Loading
 
     fun isSuccessful(): Boolean = this is Success
 
     fun isFailed(): Boolean = this is Error
-
 
     companion object {
         /**

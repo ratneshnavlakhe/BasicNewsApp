@@ -10,7 +10,7 @@ interface NewsApi {
     suspend fun getNews(
         @Query("country") country: String = DEFAULT_COUNTRY,
         @Query("page") pageNum: Int = DEFAULT_PAGE_NUM,
-        @Query("pageSize") pageSize: Int = DEFAULT_QUERY_PAGE_SIZE,
+        @Query("pageSize") pageSize: Int = DEFAULT_QUERY_PAGE_SIZE
     ): Response<NewsListResponse>
 
     companion object {

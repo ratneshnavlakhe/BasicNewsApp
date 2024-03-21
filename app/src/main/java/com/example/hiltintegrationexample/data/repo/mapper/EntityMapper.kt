@@ -27,7 +27,6 @@ fun ArticleEntity.articleEntityToArticle(): Article {
     )
 }
 
-
 fun SourceEntity.sourceEntityToSource(): Source {
     return Source(
         id = id,

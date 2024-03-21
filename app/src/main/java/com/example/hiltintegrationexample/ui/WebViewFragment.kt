@@ -18,17 +18,14 @@ class WebViewFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentWebViewBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?,
-    ) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding.webViewContainer) {
             settings.javaScriptEnabled = true

@@ -1,0 +1,12 @@
+root = true
+
+[*.{kt,kts}]
+ktlint_code_style = android_studio
+
+# https://pinterest.github.io/ktlint/1.1.1/rules/standard/#annotation-formatting
+ktlint_standard_annotation = disabled
+
+insert_final_newline = false
+
+# https://pinterest.github.io/ktlint/1.1.1/rules/standard/#no-empty-first-line-at-start-in-class-body
+ktlint_standard_no-empty-first-line-in-class-body = disabled
