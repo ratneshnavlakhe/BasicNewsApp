@@ -77,4 +77,9 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // Unit test
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2")
+    testImplementation("androidx.arch.core:core-testing:2.1.0")
+    testImplementation("org.hamcrest:hamcrest-all:1.3")
 }
