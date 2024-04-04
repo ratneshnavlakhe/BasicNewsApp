@@ -14,7 +14,7 @@ constructor(
     ).toString()
 
     override fun saveNewsLocale(locale: String) {
-        sharedPreferences.edit().putString(COUNTRY_LOCALE, locale).commit()
+        sharedPreferences.edit().putString(COUNTRY_LOCALE, locale).apply()
     }
 
     companion object {

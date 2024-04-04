@@ -19,7 +19,6 @@ constructor(
     override suspend fun getNews(pageNumber: Int): Flow<Resource<List<Article>>> {
         return flow {
             val countryLocale = newsLocalSource.getNewsLocale()
-            println("Country locale is $countryLocale")
             val response =
                 apiService.getNews(
                     pageNum = pageNumber,

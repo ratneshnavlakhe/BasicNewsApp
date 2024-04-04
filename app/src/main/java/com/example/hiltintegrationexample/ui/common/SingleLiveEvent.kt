@@ -13,13 +13,12 @@ open class SingleLiveEvent<T> : MutableLiveData<T>() {
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
         // Observe the internal MutableLiveData
         super.observe(
-            owner,
-            Observer {
-                if (mPending.compareAndSet(true, false)) {
-                    observer.onChanged(it)
-                }
+            owner
+        ) {
+            if (mPending.compareAndSet(true, false)) {
+                observer.onChanged(it)
             }
-        )
+        }
     }
 
     @MainThread
